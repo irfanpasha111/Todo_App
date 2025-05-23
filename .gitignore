@@ -1,0 +1,48 @@
+# Dependencies
+node_modules
+
+# Build output
+dist/
+build/
+
+# Logs
+*.log
+
+# Environment variables
+.env
+.env.local
+
+# System
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.vscode/
+.idea/
+
+
+# .gitignore for Spring Boot
+# Java build files
+target/
+*.class
+
+# Logs
+*.log
+
+# Maven
+.mvn/
+!**/mvn/wrapper/**
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Environment files
+*.env
