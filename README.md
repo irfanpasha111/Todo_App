@@ -49,3 +49,14 @@ The user shall be able to delete a task from the list.
 - Confirmation prompt before deleting.
 - Task is removed from the backend and UI.
 - Deletion persists across app restarts.
+
+## User Story 4: Mark Task as Completed/Uncompleted
+
+**Description:**  
+The user shall be able to mark a task as completed or uncompleted.
+
+**Features Implemented:**
+- Checkbox to toggle task completion.
+- Backend is updated with new completion status.
+- Completed tasks show with a strikethrough.
+- Changes persist after restarting the app.
