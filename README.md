@@ -60,3 +60,14 @@ The user shall be able to mark a task as completed or uncompleted.
 - Backend is updated with new completion status.
 - Completed tasks show with a strikethrough.
 - Changes persist after restarting the app.
+
+## User Story 5: View All Tasks on App Launch
+
+**Description:**  
+The user shall see a list of all current tasks upon opening the app.
+
+**Features Implemented:**
+- Tasks load automatically on app startup.
+- Each task displays title, due date, priority, and completion status.
+- The list updates immediately after adding, editing, or deleting tasks.
+- The task list view supports scrolling for overflow.
