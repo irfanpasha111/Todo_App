@@ -38,3 +38,14 @@ The user shall be able to edit an existing task's details (title, description, d
 **Acceptance Criteria Met:**
 - Users can modify any task field and save changes.
 - Updates are persisted in the backend and visible in the UI.
+
+## User Story 3: Delete Task
+
+**Description:**  
+The user shall be able to delete a task from the list.
+
+**Features Implemented:**
+- "Delete" button added for each task.
+- Confirmation prompt before deleting.
+- Task is removed from the backend and UI.
+- Deletion persists across app restarts.
