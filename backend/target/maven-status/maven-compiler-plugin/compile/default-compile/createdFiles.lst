@@ -1,0 +1,4 @@
+com\example\todo\Controller\TaskController.class
+com\example\todo\repository\TaskRepository.class
+com\example\todo\model\Task.class
+com\example\todo\TodoAppApplication.class
