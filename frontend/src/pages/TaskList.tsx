@@ -30,6 +30,9 @@ const TaskList: React.FC = () => {
   }, []);
 
   const deleteTask = (id: number) => {
+    const confirmed = window.confirm('Are you sure you want to delete this task?');
+    if (!confirmed) return;
+
     axios.delete(`http://localhost:8080/api/tasks/${id}`)
       .then(() => {
         fetchTasks();
