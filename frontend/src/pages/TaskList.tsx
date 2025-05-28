@@ -14,6 +14,7 @@ interface Task {
 const TaskList: React.FC = () => {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const fetchTasks = () => {
     axios.get('http://localhost:8080/api/tasks')
@@ -70,9 +71,22 @@ const TaskList: React.FC = () => {
       });
   };
 
+  const filteredTasks = tasks.filter(task =>
+    task.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    task.description.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div>
       <h1>My ToDos</h1>
+
+      <input
+        type="text"
+        placeholder="Search tasks..."
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        style={{ marginBottom: '1rem', padding: '0.5rem', width: '100%' }}
+      />
 
       <TaskForm
         onTaskAdded={fetchTasks}
@@ -82,7 +96,7 @@ const TaskList: React.FC = () => {
       />
 
       <ul>
-        {tasks.map(task => (
+        {filteredTasks.map(task => (
           <li key={task.id} style={{ marginBottom: '1rem' }}>
             <input
               type="checkbox"
