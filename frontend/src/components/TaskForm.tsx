@@ -1,5 +1,5 @@
 // src/components/TaskForm.tsx
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 interface Task {
@@ -13,16 +13,16 @@ interface Task {
 
 interface TaskFormProps {
   onTaskAdded: () => void;
-  taskToEdit?: Task | null;
-  onTaskUpdated?: (updatedTask: Task) => void;
-  cancelEdit?: () => void;
+  onTaskUpdated: (updatedTask: Task) => void;
+  cancelEdit: () => void;
+  taskToEdit: Task | null;
 }
 
 const TaskForm: React.FC<TaskFormProps> = ({
   onTaskAdded,
-  taskToEdit,
   onTaskUpdated,
   cancelEdit,
+  taskToEdit,
 }) => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
@@ -50,7 +50,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
       return;
     }
 
-    const taskPayload = {
+    const taskData = {
       title,
       description,
       dueDate,
@@ -59,23 +59,16 @@ const TaskForm: React.FC<TaskFormProps> = ({
     };
 
     if (taskToEdit) {
-      // Update existing task
-      axios
-        .put(`http://localhost:8080/api/tasks/${taskToEdit.id}`, {
-          ...taskToEdit,
-          ...taskPayload,
+      axios.put(`http://localhost:8080/api/tasks/${taskToEdit.id}`, taskData)
+        .then(response => {
+          onTaskUpdated(response.data);
+          cancelEdit();
         })
-        .then((response) => {
-          onTaskUpdated?.(response.data);
-          cancelEdit?.();
-        })
-        .catch((error) => {
+        .catch(error => {
           console.error('Error updating task:', error);
         });
     } else {
-      // Create new task
-      axios
-        .post('http://localhost:8080/api/tasks', taskPayload)
+      axios.post('http://localhost:8080/api/tasks', taskData)
         .then(() => {
           setTitle('');
           setDescription('');
@@ -83,7 +76,7 @@ const TaskForm: React.FC<TaskFormProps> = ({
           setPriority('Low');
           onTaskAdded();
         })
-        .catch((error) => {
+        .catch(error => {
           console.error('Error adding task:', error);
         });
     }
@@ -95,29 +88,31 @@ const TaskForm: React.FC<TaskFormProps> = ({
         type="text"
         placeholder="Title"
         value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        onChange={e => setTitle(e.target.value)}
         required
       />
       <input
         type="text"
         placeholder="Description"
         value={description}
-        onChange={(e) => setDescription(e.target.value)}
+        onChange={e => setDescription(e.target.value)}
       />
       <input
         type="date"
         value={dueDate}
-        onChange={(e) => setDueDate(e.target.value)}
+        onChange={e => setDueDate(e.target.value)}
       />
-      <select value={priority} onChange={(e) => setPriority(e.target.value)}>
+      <select value={priority} onChange={e => setPriority(e.target.value)}>
         <option>Low</option>
         <option>Medium</option>
         <option>High</option>
       </select>
-      <button type="submit">{taskToEdit ? 'Update Task' : 'Add Task'}</button>
+      <button type="submit">
+        {taskToEdit ? 'Update Task' : 'Add Task'}
+      </button>
       {taskToEdit && (
-        <button type="button" onClick={cancelEdit} style={{ marginLeft: '10px' }}>
-          Cancel
+        <button type="button" onClick={cancelEdit}>
+          Cancel Edit
         </button>
       )}
     </form>

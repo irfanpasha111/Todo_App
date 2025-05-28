@@ -1,4 +1,4 @@
-package com.example.todo.controller;
+package com.example.todo.Controller;
 
 import java.util.List;
 import java.util.Optional;

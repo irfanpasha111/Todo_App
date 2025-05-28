@@ -1,4 +1,3 @@
-// src/pages/TaskList.tsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import TaskForm from '../components/TaskForm';
@@ -17,12 +16,11 @@ const TaskList: React.FC = () => {
   const [editingTask, setEditingTask] = useState<Task | null>(null);
 
   const fetchTasks = () => {
-    axios
-      .get('http://localhost:8080/api/tasks')
-      .then((response) => {
+    axios.get('http://localhost:8080/api/tasks')
+      .then(response => {
         setTasks(response.data);
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Error fetching tasks:', error);
       });
   };
@@ -32,37 +30,41 @@ const TaskList: React.FC = () => {
   }, []);
 
   const deleteTask = (id: number) => {
-    axios
-      .delete(`http://localhost:8080/api/tasks/${id}`)
+    axios.delete(`http://localhost:8080/api/tasks/${id}`)
       .then(() => {
         fetchTasks();
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Error deleting task:', error);
       });
   };
 
   const toggleCompleted = (task: Task) => {
-    axios
-      .put(`http://localhost:8080/api/tasks/${task.id}`, {
-        ...task,
-        completed: !task.completed,
-      })
+    axios.put(`http://localhost:8080/api/tasks/${task.id}`, {
+      ...task,
+      completed: !task.completed
+    })
       .then(() => {
         fetchTasks();
       })
-      .catch((error) => {
+      .catch(error => {
         console.error('Error updating task:', error);
       });
   };
 
-  const handleEditTask = (task: Task) => {
+  const handleEdit = (task: Task) => {
     setEditingTask(task);
   };
 
   const handleUpdateTask = (updatedTask: Task) => {
-    fetchTasks();
-    setEditingTask(null);
+    axios.put(`http://localhost:8080/api/tasks/${updatedTask.id}`, updatedTask)
+      .then(() => {
+        setEditingTask(null);
+        fetchTasks();
+      })
+      .catch(error => {
+        console.error('Error updating task:', error);
+      });
   };
 
   return (
@@ -77,7 +79,7 @@ const TaskList: React.FC = () => {
       />
 
       <ul>
-        {tasks.map((task) => (
+        {tasks.map(task => (
           <li key={task.id} style={{ marginBottom: '1rem' }}>
             <input
               type="checkbox"
@@ -87,8 +89,8 @@ const TaskList: React.FC = () => {
             />
             <strong style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
               {task.title}
-            </strong>{' '}
-            - {task.description} - Due: {task.dueDate} - Priority: {task.priority}
+            </strong>
+            {' '} - {task.description} - Due: {task.dueDate} - Priority: {task.priority}
             <button
               onClick={() => deleteTask(task.id)}
               style={{ marginLeft: '12px', color: 'red' }}
@@ -96,8 +98,8 @@ const TaskList: React.FC = () => {
               Delete
             </button>
             <button
-              onClick={() => handleEditTask(task)}
-              style={{ marginLeft: '8px', color: 'blue' }}
+              onClick={() => handleEdit(task)}
+              style={{ marginLeft: '8px' }}
             >
               Edit
             </button>
