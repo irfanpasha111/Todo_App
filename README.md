@@ -71,3 +71,10 @@ The user shall see a list of all current tasks upon opening the app.
 - Each task displays title, due date, priority, and completion status.
 - The list updates immediately after adding, editing, or deleting tasks.
 - The task list view supports scrolling for overflow.
+
+## User Story 6: Search Tasks
+
+- The user can search tasks by entering keywords.
+- The task list filters dynamically based on matching keywords in the task title or description.
+- Clearing the search term restores the full task list.
+
